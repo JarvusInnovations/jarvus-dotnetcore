@@ -1,7 +1,7 @@
 using System;
 using Xunit;
 
-namespace jarvus_dotnetcore
+namespace Jarvus.Tests
 {
     public class UnitTest1
     {

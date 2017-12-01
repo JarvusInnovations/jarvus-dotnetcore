@@ -5625,7 +5625,7 @@
       "projectName": "jarvus-dotnetcore",
       "projectPath": "/Users/mijogu/Development/jarvus-dotnetcore/Jarvus/jarvus-dotnetcore.csproj",
       "packagesPath": "/Users/mijogu/.nuget/packages/",
-      "outputPath": "/Users/mijogu/Development/jarvus-dotnetcore/obj/",
+      "outputPath": "/Users/mijogu/Development/jarvus-dotnetcore/Jarvus/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/local/share/dotnet/sdk/NuGetFallbackFolder"
