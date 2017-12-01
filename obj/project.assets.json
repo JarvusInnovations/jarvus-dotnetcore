@@ -5621,9 +5621,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/mijogu/Development/jarvus-dotnetcore/jarvus-dotnetcore.csproj",
+      "projectUniqueName": "/Users/mijogu/Development/jarvus-dotnetcore/Jarvus/jarvus-dotnetcore.csproj",
       "projectName": "jarvus-dotnetcore",
-      "projectPath": "/Users/mijogu/Development/jarvus-dotnetcore/jarvus-dotnetcore.csproj",
+      "projectPath": "/Users/mijogu/Development/jarvus-dotnetcore/Jarvus/jarvus-dotnetcore.csproj",
       "packagesPath": "/Users/mijogu/.nuget/packages/",
       "outputPath": "/Users/mijogu/Development/jarvus-dotnetcore/obj/",
       "projectStyle": "PackageReference",
