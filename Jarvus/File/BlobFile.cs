@@ -2,9 +2,6 @@ namespace Jarvus.File {
 
     public class BlobFile : IWebAppFile
     {
-        public string RelativePath { get; set; }
-        public string AbsoluteBase { get; set; }
-
         public string ContainerName { get; set; }
 
         public string StorageAccountName { get; set; }
