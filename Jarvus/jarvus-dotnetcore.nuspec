@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>Jarvus.Utilities</id>
-    <version>$version$</version>
+    <version>0.0.1</version>
     <title>Jarvus Shared Utilities </title>
     <authors>Michael Gunn, James Smiley</authors>
     <owners>jarvus</owners>
