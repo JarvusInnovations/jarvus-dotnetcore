@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace jarvus_dotnetcore
+namespace Jarvus
 {
     public class Class1
     {
