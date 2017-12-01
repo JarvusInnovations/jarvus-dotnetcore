@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Jarvus.Utilities</id>
+    <version>$version$</version>
+    <title>Jarvus Shared Utilities </title>
+    <authors>Michael Gunn, James Smiley</authors>
+    <owners>jarvus</owners>
+    <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
+    <projectUrl>https://github.com/JarvusInnovations/jarvus-dotnetcore</projectUrl>
+    <iconUrl>https://github.com/JarvusInnovations/jarvus-dotnetcore/nuget_icon.jpg</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>First release of Jarvus Shared Utilities.</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>Tag1 Tag2</tags>
+    <files>
+      <file src="readme.txt" target="" />
+    </files>
+  </metadata>
+</package>
