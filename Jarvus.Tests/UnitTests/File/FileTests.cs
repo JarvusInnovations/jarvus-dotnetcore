@@ -10,7 +10,7 @@ namespace Jarvus.Tests.UnitTests
         {
             var file = new Jarvus.File.File() {};
 
-            //Assert.Equal(file, null):
+            Assert.Equal(file, null);
         }
     }
 }
