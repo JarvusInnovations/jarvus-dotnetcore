@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-using V2Props.File;
+using Jarvus.File;
 
-namespace V2Props.Services {
+namespace Jarvus.Services {
 
     public interface IFileStorageService {
 

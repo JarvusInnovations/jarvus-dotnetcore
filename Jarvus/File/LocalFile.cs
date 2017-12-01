@@ -1,8 +1,8 @@
 using System;
 
-namespace V2Props.File {
+namespace Jarvus.File {
 
-    public class LocalFile : File
+    public class LocalFile : IWebAppFile
     {
         public string UriBase { get; set; }
 
@@ -10,7 +10,7 @@ namespace V2Props.File {
         {
         }
 
-        public override string PublicUri
+        public string PublicUri
         {
             get
             {

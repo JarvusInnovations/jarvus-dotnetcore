@@ -1,6 +1,6 @@
-namespace V2Props.File {
+namespace Jarvus.File {
 
-    public class BlobFile : IFile
+    public class BlobFile : IWebAppFile
     {
         public string RelativePath { get; set; }
         public string AbsoluteBase { get; set; }

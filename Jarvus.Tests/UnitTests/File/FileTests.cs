@@ -8,7 +8,9 @@ namespace Jarvus.Tests.UnitTests
         [Fact]
         public void Test1()
         {
+            var file = new Jarvus.File.File() {};
 
+            //Assert.Equal(file, null):
         }
     }
 }

@@ -1,4 +1,4 @@
-namespace V2Props.FileStorage {
+namespace Jarvus.FileStorage {
 
     public interface IFileStorage {
 

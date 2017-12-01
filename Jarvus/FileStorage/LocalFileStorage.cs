@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Hosting;
 
-namespace V2Props.FileStorage {
+namespace Jarvus.FileStorage {
 
     public class LocalFileStorage : IFileStorage
     {

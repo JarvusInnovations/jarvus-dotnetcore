@@ -7,11 +7,11 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
-using V2Props.File;
-using V2Props.FileStorage;
-using V2Props.Settings;
+using Jarvus.File;
+using Jarvus.FileStorage;
+using Jarvus.Settings;
 
-namespace V2Props.Services {
+namespace Jarvus.Services {
 
     public class FileStorageService : IFileStorageService {
         private readonly ILogger<FileStorageService> _logger;
@@ -29,7 +29,7 @@ namespace V2Props.Services {
             _azureStorageSettings = azureStorageSettings;
         }
 
-        public async Task<V2Props.File.IFile> SaveFileAsync(IFormFile formFile)
+        public async Task<Jarvus.File.IFile> SaveFileAsync(IFormFile formFile)
         {
             IFile File = await SaveToLocalContentAsync(formFile);
 
@@ -97,7 +97,7 @@ namespace V2Props.Services {
                 };
         }
 
-        private async Task<V2Props.File.File> SaveToLocalContentAsync(IFormFile formFile)
+        private async Task<Jarvus.File.IWebAppFile> SaveToLocalContentAsync(IFormFile formFile)
         {
             string tempImageFilePath = Path.GetTempFileName();
 
@@ -117,7 +117,7 @@ namespace V2Props.Services {
 
             System.IO.File.Move(tempImageFilePath, contentImageFilePath);
 
-            return new V2Props.File.LocalFile {AbsoluteBase = imageUploadDirectoryPath, RelativePath = relativeFilePath};
+            return new Jarvus.File.LocalFile {AbsoluteBase = imageUploadDirectoryPath, RelativePath = relativeFilePath};
         }
 
         private static string GetFileExtension(IFormFile formFile)
