@@ -6,15 +6,25 @@ namespace Jarvus.Tests.UnitTests
     public class FileTests
     {
         [Fact]
-        public void Test1()
+        public void TestFilenameInConstructor()
         {
-            var file1 = new Jarvus.File.File("/home/mgunn/tmp/avatar.jpg");
-            var file2 = new Jarvus.File.File(){
+            var TestAbsolutePath = "/home/mgunn/tmp/avatar.jpg";
+
+            var file = new Jarvus.File.File(TestAbsolutePath);
+            Assert.Equal(file.AbsolutePath, TestAbsolutePath);
+        }
+
+        [Fact]
+        public void TestFilenameSetInFields()
+        {
+            var TestAbsolutePath = "/home/mgunn/tmp/avatar.jpg";
+
+            var file = new Jarvus.File.File(){
                 AbsoluteBase = "/home/mgunn"
                 ,RelativePath = "tmp/avatar.jpg"
             };
-
-            Assert.Equal(file1.AbsolutePath, file2.AbsolutePath);
+            Assert.Equal(file.AbsolutePath, TestAbsolutePath);
+            
         }
     }
 }
