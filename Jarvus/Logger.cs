@@ -22,7 +22,7 @@ namespace Jarvus {
             return Jarvus.Json.SerializeObject(data);
         }
 
-        internal static void Error(ILogger logger, object data){
+        public static void Error(ILogger logger, object data){
             logger.LogWarning(Serialize(data));
         }
     }
