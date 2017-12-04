@@ -1,3 +1,5 @@
+using System;
+
 namespace Jarvus.File {
 
     /**
@@ -23,7 +25,7 @@ namespace Jarvus.File {
             _AbsolutePath = filename;
         }
 
-        protected string _AbsolutePath;
+        private string _AbsolutePath;
 
         public string AbsolutePath {
 
@@ -42,5 +44,10 @@ namespace Jarvus.File {
         public string RelativePath { get; set; }
 
         public string AbsoluteBase { get; set; }
+
+        public string GetFileContentAsString() {
+            var lines = System.IO.File.ReadAllLines(AbsolutePath);
+            return String.Join("\n", lines);
+        }
     }
 }
