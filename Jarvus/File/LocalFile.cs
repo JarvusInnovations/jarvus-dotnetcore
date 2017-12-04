@@ -10,7 +10,7 @@ namespace Jarvus.File {
         {
         }
 
-        public string PublicUri
+        public override string PublicUri
         {
             get
             {

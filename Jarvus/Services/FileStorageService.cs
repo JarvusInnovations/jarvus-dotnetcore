@@ -99,25 +99,30 @@ namespace Jarvus.Services {
 
         private async Task<Jarvus.File.IWebAppFile> SaveToLocalContentAsync(IFormFile formFile)
         {
-            string tempImageFilePath = Path.GetTempFileName();
+            string tempFilePath = Path.GetTempFileName();
 
-            using (var stream = new FileStream(tempImageFilePath, FileMode.Create))
+            _logger.LogInformation($"saving IFormFile locally to temp directory {tempFilePath}");
+
+            using (var stream = new FileStream(tempFilePath, FileMode.Create))
             {
-                // saves image file to the temp file
+                // saves form upload file to the temp file
                 await formFile.CopyToAsync(stream);
-            }
+            } 
 
             string FileExtension = GetFileExtension(formFile);
 
-            string imageUploadDirectoryPath = _hostingEnvironment.ContentRootPath + "/wwwroot";
+            string uploadDirectoryPath = _hostingEnvironment.ContentRootPath + "/wwwroot";
 
-            string relativeFilePath = "/images/uploads/" + Path.GetFileName(tempImageFilePath) + FileExtension;
+            string relativeFilePath = "/uploads/" + Path.GetFileName(tempFilePath) + FileExtension;
 
-            string contentImageFilePath = imageUploadDirectoryPath + relativeFilePath;
+            string contentFilePath = uploadDirectoryPath + relativeFilePath;
 
-            System.IO.File.Move(tempImageFilePath, contentImageFilePath);
+            System.IO.File.Move(tempFilePath, contentFilePath);
 
-            return new Jarvus.File.LocalFile {AbsoluteBase = imageUploadDirectoryPath, RelativePath = relativeFilePath};
+            return new Jarvus.File.LocalFile {
+                    AbsoluteBase = uploadDirectoryPath,
+                    RelativePath = relativeFilePath
+                };
         }
 
         private static string GetFileExtension(IFormFile formFile)

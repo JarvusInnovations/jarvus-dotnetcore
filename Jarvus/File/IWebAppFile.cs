@@ -12,6 +12,9 @@ namespace Jarvus.File {
         
         public string AbsoluteBase { get; set; }
         
-        string PublicUri { get; set; }
+        abstract public string PublicUri { get; set; }
+
+        // we don't want to allow access to the vagueness of absolute path
+        public string AbsolutePath => PublicUri;
     }
 }

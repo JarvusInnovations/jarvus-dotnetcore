@@ -5,7 +5,7 @@ namespace Jarvus.File {
         public string ContainerName { get; set; }
 
         public string StorageAccountName { get; set; }
-        public string PublicUri
+        public override string PublicUri
         {
             get {
                 var absoluteBase = AbsoluteBase;
