@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/Jarvus.Tests/Jarvus.Tests.csproj"
+                "${workspaceFolder}"
             ],
             "problemMatcher": "$msCompile",
             "group": {
