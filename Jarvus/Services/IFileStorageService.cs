@@ -6,6 +6,6 @@ namespace Jarvus.Services {
 
     public interface IFileStorageService {
 
-        Task<IFile> SaveFileAsync(IFormFile formFile);
+        Task<Jarvus.File.File> SaveFileAsync(IFormFile formFile);
     }
 }

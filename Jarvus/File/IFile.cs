@@ -6,6 +6,5 @@ namespace Jarvus.File {
 
         string AbsoluteBase { get; set; }
 
-        string AbsolutePath();
     }
 }

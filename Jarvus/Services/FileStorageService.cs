@@ -13,7 +13,7 @@ using Jarvus.Settings;
 
 namespace Jarvus.Services {
 
-    public class FileStorageService : IFileStorageService {
+    public class FileStorageService : Jarvus.Services.IFileStorageService {
         private readonly ILogger<FileStorageService> _logger;
         private readonly IHostingEnvironment _hostingEnvironment;
         private readonly IOptions<AzureStorageSettings> _azureStorageSettings;
@@ -29,15 +29,15 @@ namespace Jarvus.Services {
             _azureStorageSettings = azureStorageSettings;
         }
 
-        public async Task<Jarvus.File.IFile> SaveFileAsync(IFormFile formFile)
+        public async Task<Jarvus.File.File> SaveFileAsync(IFormFile formFile)
         {
-            IFile File = await SaveToLocalContentAsync(formFile);
+            Jarvus.File.IWebAppFile File = await SaveToLocalContentAsync(formFile);
 
             if (_azureStorageSettings.Value.IsValid()) {
                 _logger.LogDebug("azure storage settings are valid; attempting to save there");
-                File = await SaveToAzureStorageAsync(File);
+                Jarvus.File.BlobFile BlobFile = await SaveToAzureStorageAsync(File);
 
-                var localFile = File.AbsoluteBase+"/"+File.RelativePath;
+                var localFile = File.AbsoluteBase+"/"+BlobFile.RelativePath;
                 //_logger.LogDebug($"deleting local file {localFile}");
                 //System.IO.File.Delete(localFile);
             }
@@ -45,7 +45,7 @@ namespace Jarvus.Services {
             return File;
         }
 
-        private async Task<BlobFile> SaveToAzureStorageAsync(IFile File)
+        private async Task<BlobFile> SaveToAzureStorageAsync(Jarvus.File.IWebAppFile File)
         {
             String StorageAccountName = _azureStorageSettings.Value.StorageAccountName;
             String FullImagesContainerName = _azureStorageSettings.Value.FullImagesContainerName;
