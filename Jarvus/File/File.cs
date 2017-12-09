@@ -38,7 +38,9 @@ namespace Jarvus.File {
                 }
             }
 
-            internal set {}
+            set {
+                _AbsolutePath = value;
+            }
         }
 
         public string RelativePath { get; set; }
