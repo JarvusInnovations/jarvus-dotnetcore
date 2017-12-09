@@ -10,11 +10,9 @@ namespace Jarvus.Tests.UnitTests
         {
             var TestAbsolutePath = "/home/mgunn/tmp/avatar.jpg";
 
-            var file = new Jarvus.File.LocalFile {
-                    AbsolutePath = TestAbsolutePath
-                };
+            var file = new Jarvus.File.LocalFile(TestAbsolutePath);
 
-            Assert.Equal(file.AbsolutePath, TestAbsolutePath);
+            Assert.Equal(file.AbsolutePath(), TestAbsolutePath);
         }
 
         [Fact]
@@ -26,7 +24,7 @@ namespace Jarvus.Tests.UnitTests
                 AbsoluteBase = "/home/mgunn",
                 RelativePath = "tmp/avatar.jpg"
             };
-            Assert.Equal(file.AbsolutePath, TestAbsolutePath);
+            Assert.Equal(file.AbsolutePath(), TestAbsolutePath);
         }
     }
 }

@@ -4,10 +4,11 @@ namespace Jarvus.File {
 
     public class LocalFile : IWebAppFile
     {
-        public string UriBase { get; set; }
-
-        public LocalFile()
+        public LocalFile() : base() {}
+        
+        public LocalFile(string absolutePath)
         {
+            RelativePath = absolutePath;
         }
 
         public override string PublicUri
@@ -18,7 +19,6 @@ namespace Jarvus.File {
             }
 
             set {}
-         
          }
     }
 }

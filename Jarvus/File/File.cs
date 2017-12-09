@@ -27,19 +27,21 @@ namespace Jarvus.File {
 
         private string _AbsolutePath;
 
-        public string AbsolutePath {
-
-            get {
-                if (_AbsolutePath != null) {
-                    return _AbsolutePath;
-                }
-                else {
-                    return string.Join("/", new string[] { AbsoluteBase, RelativePath });
-                }
+        public string AbsolutePath() {
+            if (_AbsolutePath != null)
+            {
+                return _AbsolutePath;
             }
+            else
+            {
+                var joinChar = "/";
 
-            set {
-                _AbsolutePath = value;
+                if (RelativePath.StartsWith("/"))
+                {
+                    joinChar = "";
+                }
+                
+                return string.Join(joinChar, new string[] { AbsoluteBase, RelativePath });
             }
         }
 
@@ -48,7 +50,7 @@ namespace Jarvus.File {
         public string AbsoluteBase { get; set; }
 
         public string GetFileContentAsString() {
-            var lines = System.IO.File.ReadAllLines(AbsolutePath);
+            var lines = System.IO.File.ReadAllLines(AbsolutePath());
             return String.Join("\n", lines);
         }
     }
