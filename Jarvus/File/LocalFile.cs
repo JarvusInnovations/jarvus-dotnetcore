@@ -10,7 +10,7 @@ namespace Jarvus.File {
         {
             RelativePath = absolutePath;
         }
-
+        
         public override string PublicUri
         {
             get

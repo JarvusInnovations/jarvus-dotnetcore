@@ -10,6 +10,7 @@ using Microsoft.WindowsAzure.Storage.Blob;
 using Jarvus.File;
 using Jarvus.FileStorage;
 using Jarvus.Settings;
+using System.Collections.Generic;
 
 namespace Jarvus.Services {
 
@@ -29,27 +30,35 @@ namespace Jarvus.Services {
             _azureStorageSettings = azureStorageSettings;
         }
 
-        public async Task<Jarvus.File.IWebAppFile> SaveFileAsync(IFormFile formFile, string SettingsName)
+        public async Task<IEnumerable<Jarvus.File.IWebAppFile>> SaveFileAsync(IFormFile formFile, string SettingsName)
         {
-            Jarvus.File.IWebAppFile File = await SaveToLocalContentAsync(formFile);
+            IWebAppFile localWebAppFile = await SaveToLocalContentAsync(formFile);
 
-            var storageSettings = _azureStorageSettings.Value.GetBlobStorageSettingsByName(SettingsName);
+            // we only want to include the
+            var returnFiles = new List<IWebAppFile> { localWebAppFile };
+            var storageSettings = _azureStorageSettings.Value
+                                         .GetBlobStorageSettingsByName(SettingsName);
 
             if (storageSettings != null)
             {
                 _logger.LogWarning("azure storage settings are valid; attempting to save there");
-                Jarvus.File.BlobFile BlobFile = await SaveToAzureStorageAsync(File, storageSettings);
+                var blobFile = await SaveToAzureStorageAsync(localWebAppFile, storageSettings);
 
-                var localFile = File.AbsoluteBase+"/"+BlobFile.RelativePath;
+                if (blobFile != null) {
+                    returnFiles.Add(blobFile);
+                }
+                //var localFile = LocalFile.AbsoluteBase+"/"+BlobFile.RelativePath;
                 //_logger.LogDebug($"deleting local file {localFile}");
                 //System.IO.File.Delete(localFile);
+
+                _logger.LogInformation($"saved local file {localWebAppFile.AbsolutePath()} to azure blob storage accessible at BLOBFILEPUBLICURIGOESHERE");
             }
             else
             {
                 _logger.LogWarning("azure storage settings not set; will not upload file to blob storage");
             }
-            
-            return File;
+
+            return returnFiles;
         }
 
         private async Task<BlobFile> SaveToAzureStorageAsync(
@@ -107,7 +116,7 @@ namespace Jarvus.Services {
                 };
         }
 
-        private async Task<Jarvus.File.IWebAppFile> SaveToLocalContentAsync(IFormFile formFile)
+        public async Task<string> SaveFormFileToTempDirectory(IFormFile formFile)
         {
             string tempFilePath = Path.GetTempFileName();
 
@@ -119,15 +128,24 @@ namespace Jarvus.Services {
                 await formFile.CopyToAsync(stream);
             } 
 
+            _logger.LogInformation($"saved IFormFile to temp directory as {tempFilePath}");
+
+            return tempFilePath;
+        }
+
+        private async Task<Jarvus.File.IWebAppFile> SaveToLocalContentAsync(IFormFile formFile)
+        {
+            string tmpFilePath = await SaveFormFileToTempDirectory(formFile);
+
             string FileExtension = GetFileExtension(formFile);
 
             string uploadDirectoryPath = _hostingEnvironment.ContentRootPath + "/wwwroot";
 
-            string relativeFilePath = "/uploads/" + Path.GetFileName(tempFilePath) + FileExtension;
+            string relativeFilePath = "/uploads/" + Path.GetFileName(tmpFilePath) + FileExtension;
 
             string contentFilePath = uploadDirectoryPath + relativeFilePath;
 
-            System.IO.File.Move(tempFilePath, contentFilePath);
+            System.IO.File.Move(tmpFilePath, contentFilePath);
 
             return new Jarvus.File.LocalFile {
                     AbsoluteBase = uploadDirectoryPath,
