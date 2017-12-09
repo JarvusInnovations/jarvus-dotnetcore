@@ -16,7 +16,7 @@ namespace Jarvus.File {
 
             file.AbsolutePath would return '/home/jsmiley/tmp/myawesomefile.txt' in both cases.
      */
-    public class File : IFile {
+    public class File {
 
         public File() {
         }

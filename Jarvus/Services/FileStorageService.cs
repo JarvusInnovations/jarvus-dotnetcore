@@ -29,26 +29,36 @@ namespace Jarvus.Services {
             _azureStorageSettings = azureStorageSettings;
         }
 
-        public async Task<Jarvus.File.File> SaveFileAsync(IFormFile formFile)
+        public async Task<Jarvus.File.IWebAppFile> SaveFileAsync(IFormFile formFile, string SettingsName)
         {
             Jarvus.File.IWebAppFile File = await SaveToLocalContentAsync(formFile);
 
-            if (_azureStorageSettings.Value.IsValid()) {
-                _logger.LogDebug("azure storage settings are valid; attempting to save there");
-                Jarvus.File.BlobFile BlobFile = await SaveToAzureStorageAsync(File);
+            var storageSettings = _azureStorageSettings.Value.GetBlobStorageSettingsByName(SettingsName);
+
+            if (storageSettings != null)
+            {
+                _logger.LogWarning("azure storage settings are valid; attempting to save there");
+                Jarvus.File.BlobFile BlobFile = await SaveToAzureStorageAsync(File, storageSettings);
 
                 var localFile = File.AbsoluteBase+"/"+BlobFile.RelativePath;
                 //_logger.LogDebug($"deleting local file {localFile}");
                 //System.IO.File.Delete(localFile);
             }
+            else
+            {
+                _logger.LogWarning("azure storage settings not set; will not upload file to blob storage");
+            }
             
             return File;
         }
 
-        private async Task<BlobFile> SaveToAzureStorageAsync(Jarvus.File.IWebAppFile File)
+        private async Task<BlobFile> SaveToAzureStorageAsync(
+                Jarvus.File.IWebAppFile File,
+                AzureBlobStorageSettings storageSettings
+            )
         {
-            String StorageAccountName = _azureStorageSettings.Value.StorageAccountName;
-            String FullImagesContainerName = _azureStorageSettings.Value.FullImagesContainerName;
+            String StorageAccountName = storageSettings.StorageAccountName;
+            String FullImagesContainerName = storageSettings.ContainerName;
 
             string relativePath = File.RelativePath;
             if (relativePath.StartsWith("/")) {
@@ -62,7 +72,7 @@ namespace Jarvus.Services {
             CloudStorageAccount storageAccount = new CloudStorageAccount(
                 new Microsoft.WindowsAzure.Storage.Auth.StorageCredentials(
                         StorageAccountName,
-                        _azureStorageSettings.Value.AccessKey
+                        storageSettings.AccessKey
                     ),
                 true
             );
@@ -90,7 +100,7 @@ namespace Jarvus.Services {
             _logger.LogDebug("upload finished");
 
             return new BlobFile {
-                    AbsoluteBase = _azureStorageSettings.Value.FullImageBaseUri,
+                    AbsoluteBase = storageSettings.BaseUri,
                     RelativePath = File.RelativePath,
                     StorageAccountName = StorageAccountName,
                     ContainerName = FullImagesContainerName
