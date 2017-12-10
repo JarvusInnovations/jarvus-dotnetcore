@@ -47,9 +47,6 @@ namespace Jarvus.Services {
                 if (blobFile != null) {
                     returnFiles.Add(blobFile);
                 }
-                //var localFile = LocalFile.AbsoluteBase+"/"+BlobFile.RelativePath;
-                //_logger.LogDebug($"deleting local file {localFile}");
-                //System.IO.File.Delete(localFile);
 
                 _logger.LogInformation($"saved local file {localWebAppFile.AbsolutePath()} to azure blob storage accessible at BLOBFILEPUBLICURIGOESHERE");
             }
