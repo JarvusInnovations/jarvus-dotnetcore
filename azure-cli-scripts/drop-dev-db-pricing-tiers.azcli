@@ -1,0 +1,17 @@
+az sql db create \
+	--resource-group JL \
+	--name JeffersonsList-JSmiley2 \
+	--server devserver3 \
+	--service-objective S0
+
+az sql db create \
+	--resource-group JL \
+	--name JeffersonsList-QA \
+	--server devserver3 \
+	--service-objective S0
+
+az sql db create \
+	--resource-group JL \
+	--name JeffersonsList-Staging \
+	--server devserver3 \
+	--service-objective S0
